@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRICTION LAB – Interaktívne múzeum trenia</title>
+<style>
+:root{--navy:#102a43;--blue:#1769aa;--cyan:#16a6b6;--pale:#eaf6fb;--ink:#243b53;--muted:#627d98;--line:#d9e7ef;--white:#fff;--green:#16866a;--orange:#e58a27;--shadow:0 12px 32px rgba(16,42,67,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f5f9fc;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:900;letter-spacing:.13em;color:var(--navy);font-size:1.05rem}.brand span{color:var(--cyan)}nav{display:flex;gap:18px;flex-wrap:wrap}nav a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:650}nav a:hover{color:var(--blue)}
+main{max-width:1180px;margin:auto;padding:0 22px}.hero{margin:34px 0 26px;border-radius:28px;padding:58px clamp(24px,6vw,76px);background:linear-gradient(120deg,#e5f4fb,#f3fbfc 60%,#dff5f3);position:relative;overflow:hidden;border:1px solid #d7edf3}.hero:after{content:"";position:absolute;width:340px;height:340px;border:50px solid rgba(22,166,182,.10);border-radius:50%;right:-90px;top:-130px}.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:.76rem}.hero h1{font-size:clamp(2.7rem,7vw,5.2rem);line-height:1;margin:14px 0;color:var(--navy);letter-spacing:-.055em}.hero p{max-width:620px;color:#486581;font-size:1.1rem}.button{border:0;border-radius:12px;background:var(--blue);color:white;padding:12px 19px;font-weight:750;cursor:pointer;display:inline-block;text-decoration:none;transition:.2s}.button:hover{background:#10558e;transform:translateY(-1px)}.button.secondary{background:#e5f3f8;color:var(--blue)}.button.secondary:hover{background:#d6ebf3}
+section{scroll-margin-top:90px;margin:54px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}.section-head h2{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.1;color:var(--navy);margin:5px 0}.section-head p{color:var(--muted);max-width:570px;margin:0}.card{background:white;border:1px solid var(--line);border-radius:20px;padding:23px;box-shadow:var(--shadow)}.grid{display:grid;gap:18px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.formula{font-size:1.5rem;font-weight:800;color:var(--blue);background:#edf7fb;padding:17px 20px;border-radius:14px;display:inline-block;margin:8px 0}.force-diagram{min-height:190px;display:flex;align-items:center;justify-content:center;background:linear-gradient(#f8fcfe 70%,#dceaf0 70%);border-radius:16px;position:relative;overflow:hidden}.block-visual{width:105px;height:75px;background:linear-gradient(135deg,#55b7cb,#1769aa);border-radius:9px;box-shadow:0 9px 0 #135484;position:relative}.arrow{position:absolute;font-weight:900;font-size:1.8rem}.arrow.push{color:var(--orange);left:calc(50% + 65px);top:48px}.arrow.friction{color:var(--green);left:calc(50% - 115px);top:48px}.diagram-label{position:absolute;bottom:9px;font-size:.8rem;color:#486581;font-weight:700}
+.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 11px;background:#edf7fb;color:#1769aa;border-radius:99px;font-size:.82rem;font-weight:750}
+.lab-shell{background:#edf5f9;border:1px solid #d8e7ee;border-radius:24px;padding:20px}.experiment-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:17px}.experiment-tab{background:#fff;border:2px solid transparent;border-radius:15px;padding:16px;text-align:left;cursor:pointer;color:var(--ink);box-shadow:0 4px 14px rgba(16,42,67,.04)}.experiment-tab strong{display:block;color:var(--navy);font-size:1rem}.experiment-tab small{color:var(--muted)}.experiment-tab.active{border-color:var(--cyan);background:#f4fcfd}.lab-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(270px,.8fr);gap:16px}.simulation{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;min-height:330px}.sim-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.sim-top h3{margin:0;color:var(--navy)}.status{font-size:.78rem;font-weight:800;color:var(--green);background:#e7f6f0;padding:5px 9px;border-radius:99px}.stage{height:220px;border-radius:14px;background:linear-gradient(#f8fcff 0 72%,#e4edf2 72%);position:relative;overflow:hidden}.surface{position:absolute;bottom:40px;left:0;right:0;height:14px;background:repeating-linear-gradient(90deg,#9bb6c4 0 12px,#86a6b7 12px 16px)}.surface.ice{background:repeating-linear-gradient(90deg,#c8edf5 0 12px,#a6dce9 12px 16px)}.surface.wood{background:repeating-linear-gradient(0deg,#c89a68 0 4px,#b47d4b 4px 7px)}.surface.rough{height:20px;background:repeating-linear-gradient(135deg,#718b98 0 5px,#9db1ba 5px 9px)}.sim-block{position:absolute;bottom:54px;left:42%;width:72px;height:58px;border-radius:8px;background:linear-gradient(135deg,#59c4d2,#1769aa);box-shadow:0 7px 0 #15517b;transition:left .8s ease}.sim-block:after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.4);border-radius:4px}.force-arrow{position:absolute;bottom:125px;font-size:1.8rem;font-weight:900;display:none}.force-arrow.show{display:block}.force-arrow.push{left:56%;color:var(--orange)}.force-arrow.resist{left:30%;color:var(--green)}.stage-label{position:absolute;bottom:8px;left:12px;color:#486581;font-size:.78rem;font-weight:700}.sim-caption{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.82rem;margin-top:10px}.controls{background:white;border:1px solid var(--line);border-radius:18px;padding:19px}.controls h3{margin:0 0 12px;color:var(--navy)}.control{margin:15px 0}.control label{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:.9rem}.control output{color:var(--blue)}input[type=range]{width:100%;accent-color:var(--blue);margin:10px 0}.select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font:inherit}.result{margin-top:16px;background:#f0f8fb;border-left:4px solid var(--cyan);border-radius:12px;padding:14px}.result strong{color:var(--navy)}.result p{margin:5px 0 0;color:#486581;font-size:.9rem}.metrics{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.metric{background:#f4f8fa;border:1px solid var(--line);padding:8px 11px;border-radius:10px;font-size:.84rem}.metric b{color:var(--blue)}.lab-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.type-card h3,.application h3{color:var(--navy);margin:8px 0}.type-icon{width:42px;height:42px;border-radius:12px;background:#e8f6fa;color:var(--blue);display:grid;place-items:center;font-weight:900;font-size:1.15rem}.type-card p,.application p{color:var(--muted);margin-bottom:0}.example{font-size:.82rem;color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.challenge{display:flex;flex-direction:column;gap:10px}.challenge p{margin:0;color:var(--muted)}.challenge button{align-self:flex-start}.quiz-question{font-weight:800;color:var(--navy);font-size:1.1rem}.answers{display:grid;gap:9px;margin:15px 0}.answer{border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px 13px;text-align:left;cursor:pointer;color:var(--ink);font:inherit}.answer:hover{border-color:var(--cyan);background:#f4fbfd}.answer.correct{border-color:#54ad8b;background:#eaf8f1}.answer.wrong{border-color:#d98a78;background:#fff1ed}.quiz-feedback{min-height:28px;color:var(--muted);font-weight:700}.progress{height:8px;background:#e4edf2;border-radius:99px;overflow:hidden;margin:14px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .3s}
+footer{margin-top:65px;background:var(--navy);color:#d8e8f0;padding:35px 22px;text-align:center}footer strong{letter-spacing:.15em;color:white}footer p{margin:5px 0;color:#9fb3c8;font-size:.9rem}
+@media(max-width:800px){nav{gap:10px}.nav{align-items:flex-start;flex-direction:column}.grid.two,.grid.three,.lab-layout{grid-template-columns:1fr}.experiment-tabs{grid-template-columns:1fr}.hero{padding:40px 25px}.section-head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand">FRICTION<span> LAB</span></div><nav>
+<a href="#teoria">Teória</a><a href="#typy">Druhy trenia</a><a href="#laboratorium">Laboratórium</a><a href="#prax">V praxi</a><a href="#vyzvy">Výzvy</a><a href="#test">Test</a>
+</nav></div></header>
+<main>
+<div class="hero">
+<div class="eyebrow">Interaktívne múzeum fyziky</div>
+<h1>FRICTION<br>LAB</h1>
+<p>Prečo sa predmety šmýkajú, kotúľajú alebo zastavujú? Preskúmaj treciu silu pomocou simulácií, experimentov a krátkych výziev.</p>
+<a class="button" href="#laboratorium">Vstúpiť do laboratória</a>
+</div>
+
+<section id="teoria">
+<div class="section-head"><div><div class="eyebrow">01 / Základy</div><h2>Čo je trenie?</h2></div><p>Trenie je sila, ktorá vzniká pri dotyku povrchov a pôsobí proti ich vzájomnému pohybu alebo proti snahe uviesť ich do pohybu.</p></div>
+<div class="grid two">
+<div class="card"><h3>Odkiaľ sa berie?</h3><p>Aj zdanlivo hladké povrchy majú drobné nerovnosti. Pri dotyku sa navzájom zachytávajú a pôsobia proti posúvaniu. Výsledok závisí od dvojice materiálov a od toho, ako silno sú pritlačené k sebe.</p><div class="formula">F<sub>t</sub> ≈ μ · F<sub>N</sub></div><p><b>μ</b> je súčiniteľ trenia a <b>F<sub>N</sub></b> je tlaková (normálová) sila. Vzťah je zjednodušený model pre suché trenie.</p></div>
+<div class="card"><h3>Sily na kvádri</h3><div class="force-diagram"><span class="arrow friction">←</span><div class="block-visual"></div><span class="arrow push">→</span><div class="diagram-label">Trecia sila pôsobí proti posúvaniu</div></div><div class="pills"><span class="pill">F<sub>t</sub> – trecia sila</span><span class="pill">F<sub>N</sub> – tlaková sila</span><span class="pill">F – pôsobiaca sila</span></div></div>
+</div>
+</section>
+
+<section id="typy">
+<div class="section-head"><div><div class="eyebrow">02 / Rozdelenie</div><h2>Tri podoby trenia</h2></div><p>Trenie sa prejavuje rôzne podľa toho, či sa predmety voči sebe posúvajú, ešte stoja, alebo sa kotúľajú.</p></div>
+<div class="grid three">
+<div class="card type-card"><div class="type-icon">01</div><h3>Pokojové trenie</h3><p>Bráni tomu, aby sa predmet začal šmýkať. Jeho veľkosť sa prispôsobuje pôsobiacej sile až po určitú maximálnu hodnotu.</p><p class="example">Príklad: krabica, ktorú tlačíš, ale ešte sa nepohybuje.</p></div>
+<div class="card type-card"><div class="type-icon">02</div><h3>Šmykové trenie</h3><p>Pôsobí, keď sa jeden povrch šmýka po druhom. Zvyčajne je menšie než maximálne pokojové trenie.</p><p class="example">Príklad: sánky kĺžuce sa po snehu.</p></div>
+<div class="card type-card"><div class="type-icon">03</div><h3>Valivé trenie</h3><p>Vzniká pri kotúľaní telesa po povrchu. V mnohých bežných situáciách je menšie než šmykové trenie.</p><p class="example">Príklad: koleso bicykla na ceste.</p></div>
+</div>
+</section>
+
+<section id="laboratorium">
+<div class="section-head"><div><div class="eyebrow">03 / Interaktívna zóna</div><h2>Laboratórium trenia</h2></div><p>Vyber experiment, uprav podmienky a spusti simuláciu. Sleduj, ako sa mení pohyb kvádra a trecia sila.</p></div>
+<div class="lab-shell">
+<div class="experiment-tabs">
+<button class="experiment-tab active" data-exp="surface"><strong>Experiment 1 – Povrch</strong><small>Porovnaj rôzne materiály</small></button>
+<button class="experiment-tab" data-exp="mass"><strong>Experiment 2 – Hmotnosť</strong><small>Zmeň hmotnosť kvádra</small></button>
+<button class="experiment-tab" data-exp="force"><strong>Experiment 3 – Pôsobiaca sila</strong><small>Nájdi hranicu pohybu</small></button>
+</div>
+<div class="lab-layout">
+<div class="simulation">
+<div class="sim-top"><h3 id="simTitle">Vplyv povrchu</h3><span class="status" id="simStatus">Pripravené</span></div>
+<div class="stage" id="stage">
+<div class="force-arrow push show" id="pushArrow">→</div><div class="force-arrow resist show" id="resistArrow">←</div>
+<div class="sim-block" id="simBlock"></div><div class="surface wood" id="surface"></div><div class="stage-label" id="stageLabel">Drevená podložka</div>
+</div>
+<div class="sim-caption"><span>Oranžová: pôsobiaca sila</span><span>Zelená: trecia sila</span></div>
+<div class="metrics"><div class="metric">Hmotnosť: <b id="massMetric">5 kg</b></div><div class="metric">Súčiniteľ μ: <b id="muMetric">0,40</b></div><div class="metric">Trecia sila: <b id="frictionMetric">19,6 N</b></div></div>
+<div class="result"><strong id="resultTitle">Čo pozorujeme?</strong><p id="resultText">Zvoľ materiál a spusti experiment. Pri rovnakom zaťažení rôzne povrchy vytvárajú rôzne veľké trenie.</p></div>
+</div>
+<div class="controls">
+<h3>Nastavenie experimentu</h3>
+<div class="control" id="surfaceControl"><label for="material">Materiál podložky</label><select class="select" id="material"><option value="ice">Ľad</option><option value="wood" selected>Drevo</option><option value="rough">Drsný povrch</option></select></div>
+<div class="control" id="massControl"><label for="mass">Hmotnosť <output id="massOut">5 kg</output></label><input id="mass" type="range" min="1" max="20" value="5"></div>
+<div class="control" id="forceControl"><label for="force">Pôsobiaca sila <output id="forceOut">15 N</output></label><input id="force" type="range" min="0" max="100" value="15"></div>
+<div class="control" id="pushControl"><label for="pushForce">Sila pri pokuse <output id="pushOut">30 N</output></label><input id="pushForce" type="range" min="0" max="100" value="30"></div>
+<div class="lab-actions"><button class="button" id="runExperiment">Spustiť experiment</button><button class="button secondary" id="resetExperiment">Resetovať</button></div>
+<p style="font-size:.78rem;color:#789;margin:12px 0 0">Model používa približné ilustračné hodnoty súčiniteľa trenia. V skutočnosti závisia od konkrétnych materiálov a podmienok.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="prax">
+<div class="section-head"><div><div class="eyebrow">04 / Každodenný život</div><h2>Trenie okolo nás</h2></div><p>Trenie nie je vždy nepriateľ. Niekedy nám pomáha a inokedy sa ho snažíme zmenšiť.</p></div>
+<div class="grid three">
+<div class="card application"><div class="example">Užitočné trenie</div><h3>Chôdza</h3><p>Trenie medzi podrážkou a zemou nám umožňuje odraziť sa a nešmýkať sa.</p></div>
+<div class="card application"><div class="example">Užitočné trenie</div><h3>Brzdenie</h3><p>Brzdy vytvárajú trenie, ktoré pomáha spomaliť koleso a vozidlo.</p></div>
+<div class="card application"><div class="example">Znižovanie trenia</div><h3>Ložiská</h3><p>Valivé prvky v ložiskách znižujú odpor pri otáčaní súčiastok.</p></div>
+</div>
+</section>
+
+<section id="vyzvy">
+<div class="section-head"><div><div class="eyebrow">05 / Mini výzvy</div><h2>Vyskúšaj si to</h2></div><p>Najskôr si tipni výsledok a potom ho over v laboratóriu.</p></div>
+<div class="grid three">
+<div class="card challenge"><div class="type-icon">A</div><h3>Ktorý povrch?</h3><p>Na ktorom z ponúknutých povrchov bude mať kváder pri rovnakom zaťažení zvyčajne najväčšie trenie?</p><button class="button secondary reveal" data-answer="Drsný povrch – v našom zjednodušenom modeli má najväčší súčiniteľ trenia.">Ukázať odpoveď</button><p class="hidden-answer" hidden></p></div>
+<div class="card challenge"><div class="type-icon">B</div><h3>Čo spraví väčšia hmotnosť?</h3><p>Ak je povrch rovnaký, čo sa stane s trecou silou, keď zvýšime hmotnosť kvádra?</p><button class="button secondary reveal" data-answer="Tlaková sila sa zväčší, a preto sa v tomto modeli zväčší aj trecia sila.">Ukázať odpoveď</button><p class="hidden-answer" hidden></p></div>
+<div class="card challenge"><div class="type-icon">C</div><h3>Prečo sa predmet rozbehne?</h3><p>Čo sa stane, keď pôsobiaca sila prekročí maximálnu hodnotu pokojového trenia?</p><button class="button secondary reveal" data-answer="Predmet sa začne pohybovať. Potom pôsobí šmykové trenie, ktoré býva menšie než maximálne pokojové trenie.">Ukázať odpoveď</button><p class="hidden-answer" hidden></p></div>
+</div>
+</section>
+
+<section id="test">
+<div class="section-head"><div><div class="eyebrow">06 / Záverečný test</div><h2>Over si vedomosti</h2></div><p>Odpovedz na štyri otázky. Po každej odpovedi zistíš, či si vybral správne.</p></div>
+<div class="card" style="max-width:760px;margin:auto">
+<div style="display:flex;justify-content:space-between;gap:10px"><b id="questionCount">Otázka 1 zo 4</b><b id="scoreLabel">Body: 0</b></div><div class="progress"><span id="quizProgress"></span></div>
+<div class="quiz-question" id="question">Čo je hlavnou úlohou trecej sily pri šmýkaní?</div><div class="answers" id="answers"></div><div class="quiz-feedback" id="feedback" aria-live="polite"></div><button class="button" id="nextQuestion" disabled>Ďalšia otázka</button>
+</div>
+</section>
+</main>
+<footer><strong>FRICTION LAB</strong><p>Objavuj fyziku pohybu. Pozoruj. Experimentuj. Vysvetľuj.</p></footer>
+<script>
+const muValues={ice:.08,wood:.40,rough:.75}, names={ice:"Ľad",wood:"Drevená podložka",rough:"Drsný povrch"};
+let current="surface";
+const $=id=>document.getElementById(id);
+const mass=$("mass"),force=$("force"),push=$("pushForce"),material=$("material");
+function fmt(n){return n.toFixed(1).replace(".",",")}
+function showControls(){
+ $("surfaceControl").style.display=current==="surface"?"block":"none";
+ $("massControl").style.display=current==="mass"?"block":"none";
+ $("forceControl").style.display=current==="force"?"none":"none";
+ $("pushControl").style.display=current==="force"?"block":"none";
+ $("simTitle").textContent={surface:"Vplyv povrchu",mass:"Vplyv hmotnosti",force:"Vplyv pôsobiacej sily"}[current];
+ $("stageLabel").textContent=names[material.value];
+}
+function updateLabels(){$("massOut").textContent=mass.value+" kg";$("forceOut").textContent=force.value+" N";$("pushOut").textContent=push.value+" N";}
+function updateMetrics(){
+ const m=current==="mass"?+mass.value:5,mu=muValues[material.value],normal=m*9.81,fr=mu*normal;
+ $("massMetric").textContent=m+" kg";$("muMetric").textContent=fmt(mu);$("frictionMetric").textContent=fmt(fr)+" N";
+ $("surface").className="surface "+material.value;$("stageLabel").textContent=names[material.value];
+ $("simBlock").style.width=(62+Math.min(m,20)*1.4)+"px";
+}
+function resetVisual(){$("simBlock").style.left="42%";$("simStatus").textContent="Pripravené";$("pushArrow").classList.add("show");$("resistArrow").classList.add("show");}
+function selectExperiment(which){
+ current=which;document.querySelectorAll(".experiment-tab").forEach(b=>b.classList.toggle("active",b.dataset.exp===which));
+ if(which==="surface"){material.value="ice";mass.value=5;push.value=30;}
+ if(which==="mass"){material.value="wood";mass.value=5;push.value=30;}
+ if(which==="force"){material.value="wood";mass.value=5;push.value=30;}
+ showControls();updateLabels();updateMetrics();resetVisual();
+ $("resultTitle").textContent="Čo pozorujeme?";$("resultText").textContent="Uprav nastavenia a spusti experiment. Sleduj, ako sa mení trecia sila a pohyb kvádra.";
+}
+document.querySelectorAll(".experiment-tab").forEach(b=>b.addEventListener("click",()=>selectExperiment(b.dataset.exp)));
+[ mass,force,push,material ].forEach(el=>el.addEventListener("input",()=>{updateLabels();updateMetrics();}));
+$("runExperiment").addEventListener("click",()=>{
+ const m=current==="mass"?+mass.value:5,mu=muValues[material.value],normal=m*9.81,fr=mu*normal,applied=+push.value;
+ updateMetrics();$("simStatus").textContent="Experiment prebehol";
+ if(current==="force"){
+   const maxStatic=fr, kinetic=fr*.8;
+   if(applied>maxStatic){$("simBlock").style.left="65%";$("resultTitle").textContent="Kváder sa začal pohybovať";$("resultText").textContent=`Pôsobiaca sila ${fmt(applied)} N prekonala približnú hranicu pokojového trenia ${fmt(maxStatic)} N. Po rozbehnutí sme použili menšie šmykové trenie – približne ${fmt(kinetic)} N.`;}
+   else{$("simBlock").style.left="42%";$("resultTitle").textContent="Kváder zostal na mieste";$("resultText").textContent=`Pôsobiaca sila ${fmt(applied)} N neprekročila približnú maximálnu hodnotu pokojového trenia ${fmt(maxStatic)} N. Pokojové trenie sa prispôsobilo a zabránilo pohybu.`;}
+ }else{
+   const amount=current==="surface"?`Na povrchu ${names[material.value].toLowerCase()}`:`Pri hmotnosti ${m} kg`;
+   $("simBlock").style.left="49%";$("resultTitle").textContent="Výsledok porovnania";$("resultText").textContent=`${amount} vychádza v tomto modeli trecia sila približne ${fmt(fr)} N. ${current==="surface"?"Pri rovnakom zaťažení zmena materiálu mení súčiniteľ trenia.":"Pri rovnakom povrchu väčšia hmotnosť zväčší tlakovú silu, a tým aj treciu silu."}`;
+ }
+});
+$("resetExperiment").addEventListener("click",()=>selectExperiment(current));
+document.querySelectorAll(".reveal").forEach(btn=>btn.addEventListener("click",()=>{const p=btn.nextElementSibling;p.hidden=!p.hidden;p.textContent=p.hidden?"":btn.dataset.answer;btn.textContent=p.hidden?"Ukázať odpoveď":"Skryť odpoveď";}));
+const quiz=[
+{q:"Čo je hlavnou úlohou trecej sily pri šmýkaní?",a:["Podporuje pohyb v smere posúvania","Pôsobí proti vzájomnému posúvaniu povrchov","Vždy spôsobuje zrýchlenie"],c:1,e:"Trecia sila pri šmýkaní pôsobí proti smeru vzájomného pohybu dotýkajúcich sa povrchov."},
+{q:"Ktorý druh trenia pôsobí, keď sa koleso kotúľa po ceste?",a:["Valivé trenie","Šmykové trenie","Pokojové trenie"],c:0,e:"Pri kotúľaní hovoríme o valivom trení."},
+{q:"Čo sa zvyčajne stane s trecou silou, ak zvýšime hmotnosť na rovnakom vodorovnom povrchu?",a:["Zmenší sa","Zostane vždy rovnaká","Zväčší sa"],c:2,e:"Väčšia hmotnosť znamená väčšiu tlakovú silu, a preto v jednoduchom modeli aj väčšiu treciu silu."},
+{q:"Kedy sa predmet začne šmýkať?",a:["Keď pôsobiaca sila prekoná maximálne pokojové trenie","Keď je trecia sila nulová","Keď sa zmení jeho farba"],c:0,e:"Pohyb sa začne, keď pôsobiaca sila prekoná maximálnu hodnotu pokojového trenia."}
+];
+let qi=0,score=0,answered=false;
+function renderQuiz(){
+ const q=quiz[qi];$("questionCount").textContent=`Otázka ${qi+1} zo ${quiz.length}`;$("question").textContent=q.q;$("answers").innerHTML="";$("feedback").textContent="";$("nextQuestion").disabled=true;$("nextQuestion").textContent=qi===quiz.length-1?"Zobraziť výsledok":"Ďalšia otázka";answered=false;$("quizProgress").style.width=(qi/quiz.length*100)+"%";
+ q.a.forEach((a,i)=>{const b=document.createElement("button");b.className="answer";b.textContent=a;b.addEventListener("click",()=>answer(i,b));$("answers").appendChild(b);});
+}
+function answer(i,button){if(answered)return;answered=true;const q=quiz[qi];document.querySelectorAll(".answer").forEach((b,j)=>{b.disabled=true;if(j===q.c)b.classList.add("correct");});if(i===q.c){score++;$("feedback").textContent="Správne. "+q.e;}else{button.classList.add("wrong");$("feedback").textContent="Nie celkom. "+q.e;}$("scoreLabel").textContent="Body: "+score;$("nextQuestion").disabled=false;}
+$("nextQuestion").addEventListener("click",()=>{if(!answered)return;if(qi<quiz.length-1){qi++;renderQuiz();}else{$("questionCount").textContent="Test dokončený";$("question").textContent=`Tvoj výsledok: ${score} zo ${quiz.length} bodov`; $("answers").innerHTML="";$("feedback").textContent=score===4?"Výborne! Máš všetky odpovede správne.":"Skús si ešte raz prejsť teóriu a laboratórium."; $("quizProgress").style.width="100%";$("nextQuestion").textContent="Zopakovať test";$("nextQuestion").disabled=false;answered=false;qi=-1;}});
+$("nextQuestion").addEventListener("click",()=>{if(qi===-1){qi=0;score=0;$("scoreLabel").textContent="Body: 0";renderQuiz();}});
+showControls();updateLabels();updateMetrics();renderQuiz();
+</script>
+</body>
+</html>
